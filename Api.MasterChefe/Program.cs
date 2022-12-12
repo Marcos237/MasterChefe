@@ -1,9 +1,19 @@
+using Api.MasterChefe.Ioc.Initializers;
+using Api.MasterChefe.Repository.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+new AplicationInitializer().Initialize(builder.Services);
+new DomainInitializer().Initialize(builder.Services);
+new RepositoryInitializer().Initialize(builder.Services);
+
+builder.Services.AddDbContext<MasterChefeContext>(
+        options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

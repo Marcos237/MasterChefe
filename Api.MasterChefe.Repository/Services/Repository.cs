@@ -35,7 +35,7 @@ namespace Api.MasterChefe.Repository.Services
 
         public List<T> BuscarTodos()
         {
-            throw new NotImplementedException();
+            return dbSet.ToList();
         }
 
         public bool Deletar(int id)

@@ -11,11 +11,13 @@ namespace Api.MasterChefe.Aplications.Services
         private readonly IRepository<Receita> repository;
         private readonly IValidator<Receita> validacao;
         private readonly IEventoService eventoService;
-        public ReceitaAplicationsService(IRepository<Receita> repository, IValidator<Receita> validacao, IEventoService eventoService)
+        private readonly IReceitaRepository receitaRepository;
+        public ReceitaAplicationsService(IRepository<Receita> repository, IValidator<Receita> validacao, IEventoService eventoService, IReceitaRepository receitaRepository)
         {
             this.repository = repository;
             this.validacao = validacao;
             this.eventoService = eventoService;
+            this.receitaRepository = receitaRepository;
         }
 
         public async Task<Receita> Salvar(Receita receita)
@@ -49,7 +51,7 @@ namespace Api.MasterChefe.Aplications.Services
 
         public Task<Receita> BuscarPorId(int id)
         {
-            return Task.FromResult(repository.BuscarPorId(id));
+            return Task.FromResult(receitaRepository.BuscarPorId(id));
         }
 
         public Task<List<Receita>> BuscarTodos()

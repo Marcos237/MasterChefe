@@ -2,8 +2,8 @@
 {
     public class Ingrediente : EntityBase
     {
-        public string? descricao { get; set; }
-        public string? peso { get; set; }
+        public string? Nome { get; set; }
+        public decimal? peso { get; set; }
         public int? quantidade { get; set; }
     }
 }

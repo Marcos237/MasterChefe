@@ -8,7 +8,7 @@ namespace Api.MasterChefe.Ioc.Initializers
     {
         public void Initialize(IServiceCollection services)
         {
-            services.AddTransient<IEventoService,EventoService>();
+            services.AddScoped<IEventoService,EventoService>();
         }
     }
 }

@@ -8,7 +8,9 @@ namespace Api.MasterChefe.Ioc.Initializers
     {
         public void Initialize(IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IReceitaRepository, ReceitaRepository>();
+            services.AddTransient<IIngredienteRepository, IngredienteRepository>();
         }
     }
 }
