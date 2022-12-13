@@ -15,9 +15,10 @@ namespace Api.MasterChefe.Repository.Services
             dbSet = masterChefeContext.Set<Ingrediente>();
 
         }
-        public List<Ingrediente> BuscarPorId(int id)
+        public async Task<List<Ingrediente>> BuscarPorId(int id)
         {
-            return dbSet.Where(x => x.id == id).ToList();
+            var dados = await dbSet.Where(x => x.id == id).ToListAsync();
+            return dados;
         }
     }
 }

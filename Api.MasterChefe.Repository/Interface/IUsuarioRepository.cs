@@ -2,8 +2,8 @@
 
 namespace Api.MasterChefe.Repository.Interface
 {
-    public interface IReceitaRepository
+    public interface IUsuarioRepository
     {
-        Task<Receita> BuscarPorId(int id);
+        Task<Usuario> BuscarUsuario(string nome, string senha);
     }
 }

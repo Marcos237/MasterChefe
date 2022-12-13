@@ -11,6 +11,7 @@ namespace Api.MasterChefe.Ioc.Initializers
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IReceitaRepository, ReceitaRepository>();
             services.AddTransient<IIngredienteRepository, IngredienteRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
         }
     }
 }

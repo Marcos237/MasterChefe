@@ -49,9 +49,9 @@ namespace Api.MasterChefe.Aplications.Services
             return receita;
         }
 
-        public Task<Receita> BuscarPorId(int id)
+        public async Task<Receita> BuscarPorId(int id)
         {
-            return Task.FromResult(receitaRepository.BuscarPorId(id));
+            return await receitaRepository.BuscarPorId(id);
         }
 
         public Task<List<Receita>> BuscarTodos()

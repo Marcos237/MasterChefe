@@ -11,12 +11,14 @@ namespace Api.MasterChefe.Aplications.Services
         private readonly IRepository<Ingrediente> repository;
         private readonly IValidator<Ingrediente> validacao;
         private readonly IEventoService eventoService;
+        private readonly IIngredienteRepository ingredienteRepository;
 
-        public IngredienteAplicationService(IRepository<Ingrediente> repository, IValidator<Ingrediente> validacao, IEventoService eventoService)
+        public IngredienteAplicationService(IRepository<Ingrediente> repository, IValidator<Ingrediente> validacao, IEventoService eventoService, IIngredienteRepository ingredienteRepository)
         {
             this.repository = repository;
             this.validacao = validacao;
             this.eventoService = eventoService;
+            this.ingredienteRepository = ingredienteRepository;
         }
         public async Task<Ingrediente> Salvar(Ingrediente ingrediente)
         {
@@ -46,9 +48,9 @@ namespace Api.MasterChefe.Aplications.Services
 
             return ingrediente;
         }
-        public Task<List<Ingrediente>> BuscarPorId(int id)
+        public async Task<List<Ingrediente>> BuscarPorId(int id)
         {
-            return null;
+            return await ingredienteRepository.BuscarPorId(id);
         }
 
         public Task<bool> Deletar(int id)
