@@ -11,17 +11,19 @@ namespace Api.MasterChefe.Repository.Context
         {
             models.Entity<Receita>(x =>
             {
-                x.ToTable("Receita");
-                x.HasKey(c => c.id).HasName("Id");
-                x.Property(c => c.id).HasColumnName("id").ValueGeneratedOnAdd();
-                x.Property(c => c.titulo).HasColumnName("Titulo").HasMaxLength(100);
-                x.Property(c => c.descricao).HasColumnName("Descricao").HasMaxLength(1000);
-                x.Property(c => c.modoFazer).HasColumnName("ModoFazer").HasMaxLength(5000);
-                x.Property(c => c.imagem).HasColumnName("Imagem").HasMaxLength(5000);
+                x.ToTable("Receitas");
+                x.HasKey(c => c.id).HasName("IdReceita");
+                x.Property(c => c.id).ValueGeneratedOnAdd().IsRequired();
+                x.Property(c => c.titulo).HasColumnName("Titulo").HasColumnType("varchar").HasMaxLength(100).IsRequired();
+                x.Property(c => c.descricao).HasColumnName("Descricao").HasColumnType("varchar").HasMaxLength(1000).IsRequired();
+                x.Property(c => c.modoFazer).HasColumnName("ModoFazer").HasColumnType("varchar").HasMaxLength(5000).IsRequired();
+                x.Property(c => c.imagem).HasColumnName("Imagem").HasMaxLength(250);
                 x.Property(c => c.dataCadastro).HasColumnName("DataCadastro").HasColumnType("DateTime");
-                x.Property(c => c.dataAtualizacao).HasColumnName("DataCadastro").HasColumnType("DateTime");
+                x.Property(c => c.dataAtualizacao).HasColumnName("DataAtualizacao").HasColumnType("DateTime");
                 x.Property(c => c.ativo).HasColumnName("Ativo").HasColumnType("Bit");
+
             });
+
         }
     }
 }

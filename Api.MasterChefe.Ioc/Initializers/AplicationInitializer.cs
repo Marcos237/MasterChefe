@@ -13,7 +13,6 @@ namespace Api.MasterChefe.Ioc.Initializers
         {
             services.AddTransient<IReceitasAplicationsService, ReceitaAplicationsService>();
             services.AddTransient<IIngredientesAplicationsService, IngredienteAplicationService>();
-            services.AddTransient<IValidator<Ingrediente>, IngredienteValidacao>();
             services.AddTransient<IValidator<Receita>, ReceitaValidacao>();
             services.AddTransient<IUsuarioAplicationService, UsuarioAplicationService>();
         }

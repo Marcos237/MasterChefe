@@ -14,42 +14,42 @@ namespace Api.MasterChefe.Repository.Services
             this.masterChefeContext = masterChefeContext;
             dbSet = masterChefeContext.Set<T>();
         }
-        public T Salvar(T entity)
+        public async Task<T> Salvar(T entity)
         {
             var objreturn = dbSet.Add(entity) as T;
+            await masterChefeContext.SaveChangesAsync();
             return objreturn;
         }
-        public T Atualizar(T entity)
+        public async Task<T> Atualizar(T entity)
         {
-            var entry = masterChefeContext.Entry(entity);
+            var entry =  masterChefeContext.Entry(entity);
             dbSet.Attach(entity);
             entry.State = EntityState.Modified;
+            await masterChefeContext.SaveChangesAsync();
 
             return entity;
         }
 
-        public T BuscarPorId(int id)
+        public async Task<T> BuscarPorId(int id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public List<T> BuscarTodos()
+        public async Task<List<T>> BuscarTodos()
         {
-            return dbSet.ToList();
+            return await dbSet.ToListAsync();
         }
 
-        public bool Deletar(int id)
+        public async Task<bool> Deletar(int id)
         {
-            var dados = dbSet.Remove(dbSet.Find(id));
+            var dados = dbSet.Remove(await dbSet.FindAsync(id));
             if (dados != null)
+            {
+                await masterChefeContext.SaveChangesAsync();
                 return true;
+            }
 
             return false;
-        }
-
-        public bool Desativar(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

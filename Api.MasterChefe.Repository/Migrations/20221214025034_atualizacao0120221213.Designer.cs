@@ -4,6 +4,7 @@ using Api.MasterChefe.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.MasterChefe.Repository.Migrations
 {
     [DbContext(typeof(MasterChefeContext))]
-    partial class MasterChefeContextModelSnapshot : ModelSnapshot
+    [Migration("20221214025034_atualizacao0120221213")]
+    partial class atualizacao0120221213
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.MasterChefe.Web.Controllers
 {
-    [Route("Controller")]
+    [Route("api/Usuario")]
     [ApiController]
     public class UsuarioController : Controller
     {

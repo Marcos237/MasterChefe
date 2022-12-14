@@ -6,7 +6,7 @@ namespace Api.MasterChefe.Aplications.Interfaces
     {
         Task<Receita> Salvar(Receita receita);
         Task<Receita> Atualizar(Receita receita);
-        Task<Receita> Desativar(Receita receita);
+        Task<Receita> Desativar(int id);
         Task<Receita> BuscarPorId(int id);
         Task<List<Receita>> BuscarTodos();
 

@@ -21,7 +21,16 @@ namespace Api.MasterChefe.Repository.Context
 
         public DbSet<Receita> Receitas { get; set; }
         public DbSet<Ingrediente> Ingredientes { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ReceitaContext receita = new ReceitaContext();
+            receita.ReceitaContextConfig(modelBuilder);
+            IngredienteContext  ingredienteContext = new IngredienteContext();
+            ingredienteContext.ReceitaContextConfig(modelBuilder);
+            UsuarioContext usuarioContext = new UsuarioContext();
+            usuarioContext.ReceitaContextConfig(modelBuilder);
+        }
     }
 }

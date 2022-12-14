@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.MasterChefe.Web.Controllers
 {
-    [Route("Controller")]
+    [Route("api/Receita")]
     [ApiController]
     public class ReceitaController : Controller
     {
@@ -25,7 +25,7 @@ namespace Api.MasterChefe.Web.Controllers
             try
             {
                 var dados = await receitasAplicationsService.BuscarTodos();
-                if (dados.Count() > 0)
+                if (dados.Count() == 0)
                 {
                     return NotFound("Nenhum item encontrado");
                 }
@@ -41,6 +41,7 @@ namespace Api.MasterChefe.Web.Controllers
 
         [ProducesResponseType(typeof(Receita), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status404NotFound)]
+        [Route("id")]
         [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
@@ -106,18 +107,19 @@ namespace Api.MasterChefe.Web.Controllers
 
         [ProducesResponseType(typeof(Receita), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status500InternalServerError)]
+        [Route("id")]
         [HttpDelete]
-        public async Task<IActionResult> Delete(Receita receita)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var dados = await receitasAplicationsService.Desativar(receita);
+                var dados = await receitasAplicationsService.Desativar(id);
                 if (eventoService.Evento.eventos.Count() > 0)
                 {
                     return BadRequest(eventoService.Evento.eventos);
                 }
 
-                return Ok(dados);
+                return Ok("Item Removido");
             }
             catch (Exception ex)
             {

@@ -1,38 +1,33 @@
 ﻿using Api.MasterChefe.Domain.Entidades;
+using Api.MasterChefe.Repository.Context;
 using Api.MasterChefe.Repository.Interface;
 using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SqlHelpers.Standard;
 using System.Data;
 
 namespace Api.MasterChefe.Repository.Services
 {
     public class ReceitaRepository : IReceitaRepository
     {
-        private readonly IConfiguration _configuration;
+        private readonly MasterChefeContext masterChefeContext;
+        protected DbSet<Receita> dbSet;
+        protected DbSet<Ingrediente> dbSetIngrediente;
 
-        public ReceitaRepository(IConfiguration configuration)
+        public ReceitaRepository(MasterChefeContext masterChefeContext)
         {
-            _configuration = configuration;
+            this.masterChefeContext = masterChefeContext;
+            dbSet = masterChefeContext.Set<Receita>();
+            dbSetIngrediente = masterChefeContext.Set<Ingrediente>();
         }
 
         public async Task<Receita> BuscarPorId(int id)
         {
-            using var connection = await ConnectionFactory.ConexaoAsync(_configuration["Base"]);
-            const string query = @"SELECT 
-                                     	CodigoConvidado AS Codigo,
-                                     	CodigoConvidadoTurma AS CodigoTurma,
-                                     	NomeConvidado AS Nome,
-                                     	EmpresaConvidado AS Empresa,
-                                     	FotoConvidado AS Foto,
-										AtivoConvidado AS Ativo
-                                     FROM
-                                     	TurmaConvidado WITH (NOLOCK)
-                                     WHERE
-                                     	CodigoConvidado = @Codigo";
+            var dados = await dbSet.Where(x => x.id == id).FirstOrDefaultAsync();
+            dados.ingredientes = await dbSetIngrediente.Where(x => x.receitaId == id && x.ativo == true).ToListAsync() ?? new List<Ingrediente>();
 
-            var data = await connection.QueryFirstOrDefaultAsync<Receita>(query.ToString(), new { Id = id }, null, commandType: CommandType.Text);
-            return data;
+            return dados;
         }
     }
 }

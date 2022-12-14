@@ -16,16 +16,16 @@ namespace Api.MasterChefe.Aplications.Validacoes
                 return descricao;
             }).WithMessage("O campo de descrição é obrigatório");
 
-            RuleFor(x => x.ingredientes.Count >= 1).Must((ingredientes) =>
+            RuleFor(x => x.ingredientes.Count() > 0).Must((ingredientes) =>
             {
                 return ingredientes;
-            }).WithMessage("A lista de ingredietes deve conter pelo menos um item");
+            }).WithMessage("É obrigatório ao menos um ingrediente.");
 
-            RuleFor(x => x.descricao.Length > 1000).Must((descricao) =>
+            RuleFor(x => x.descricao.Length < 1000).Must((descricao) =>
             {
                 return descricao;
             }).WithMessage("A descrição da receita não deve conter mais que 1000 caracteres.");
-            RuleFor(x => x.modoFazer.Length > 1000).Must((modo) =>
+            RuleFor(x => x.modoFazer.Length < 5000).Must((modo) =>
             {
                 return modo;
             }).WithMessage("A Descrição não deve conter mais que 5000 caracteres.");
