@@ -1,13 +1,12 @@
-﻿namespace Api.MasterChefe.Domain.Entidades
+﻿namespace UI.MasterChefe.Web.Models
 {
-    public class Receita : EntityBase
-    {   
+    public class ReceitaModel
+    {
+        public int id { get; set; }
         public string titulo { get; set; }
         public string descricao { get; set; }
         public string modoFazer { get; set; }
         public string imagem { get; set; }
-        public ICollection<Ingrediente> ingredientes { get; set; }
-
-
+        public IEnumerable<IngredienteModel> ingredientes { get; set; }
     }
 }

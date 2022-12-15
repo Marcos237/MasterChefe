@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.MasterChefe.Web", "Api.MasterChefe\Api.MasterChefe.Web.csproj", "{A6AFA837-DC82-43CD-B1EF-BB5CAC909E49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.MasterChefe.Web", "Api.MasterChefe\Api.MasterChefe.Web.csproj", "{A6AFA837-DC82-43CD-B1EF-BB5CAC909E49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.MasterChefe.Aplications", "ClassLibrary1\Api.MasterChefe.Aplications.csproj", "{ACA1ECC5-98B4-4E1A-8F41-BF00704F8647}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.MasterChefe.Aplications", "ClassLibrary1\Api.MasterChefe.Aplications.csproj", "{ACA1ECC5-98B4-4E1A-8F41-BF00704F8647}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.MasterChefe.Domain", "Api.MasterChefe.Domain\Api.MasterChefe.Domain.csproj", "{58BDB939-6E67-4249-A858-533A1E28EB28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.MasterChefe.Domain", "Api.MasterChefe.Domain\Api.MasterChefe.Domain.csproj", "{58BDB939-6E67-4249-A858-533A1E28EB28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.MasterChefe.Repository", "Api.MasterChefe.Repository\Api.MasterChefe.Repository.csproj", "{C78713BF-9315-4CAE-A33E-1BC39C376442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.MasterChefe.Repository", "Api.MasterChefe.Repository\Api.MasterChefe.Repository.csproj", "{C78713BF-9315-4CAE-A33E-1BC39C376442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.MasterChefe.Ioc", "Api.MasterChefe.Ioc\Api.MasterChefe.Ioc.csproj", "{D1928392-4768-4F77-9B34-7D5C307FC3D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.MasterChefe.Ioc", "Api.MasterChefe.Ioc\Api.MasterChefe.Ioc.csproj", "{D1928392-4768-4F77-9B34-7D5C307FC3D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.MasterChefe.Web", "UI.MasterChefe.Web\UI.MasterChefe.Web.csproj", "{8C3B2931-BBC8-4806-AACC-A4D74A6CB4A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D1928392-4768-4F77-9B34-7D5C307FC3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1928392-4768-4F77-9B34-7D5C307FC3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1928392-4768-4F77-9B34-7D5C307FC3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C3B2931-BBC8-4806-AACC-A4D74A6CB4A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C3B2931-BBC8-4806-AACC-A4D74A6CB4A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C3B2931-BBC8-4806-AACC-A4D74A6CB4A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C3B2931-BBC8-4806-AACC-A4D74A6CB4A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
