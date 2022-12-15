@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Diagnostics;
 using System.Net;
 using UI.MasterChefe.Web.Models;
 
@@ -19,11 +18,11 @@ namespace UI.MasterChefe.Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync($"https://localhost:44341/api/Receita");
+                var response = await client.GetAsync($"https://localhost:7043/api/Receita");
                 var responseString = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    var responseData = JsonConvert.DeserializeObject<ReceitaModel>(responseString);
+                    var responseData = JsonConvert.DeserializeObject<List<ReceitaModel>>(responseString);
                     return View(responseData);
                 }
                 return View();
@@ -31,18 +30,19 @@ namespace UI.MasterChefe.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult BuscarPorId(int id)
+        public async Task<JsonResult> BuscarPorId(int id)
         {
-            var response = await client.GetAsync($"https://localhost:44341/api/Receita/id?");
-            var responseString = await response.Content.ReadAsStringAsync();
-            if (response.StatusCode == HttpStatusCode.OK)
+            using (var client = new HttpClient())
             {
-                var responseData = JsonConvert.DeserializeObject<ReceitaModel>(responseString);
-                return View(responseData);
+                var response = await client.GetAsync($"https://localhost:7043/api/Receita/id?");
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseData = JsonConvert.DeserializeObject<ReceitaModel>(responseString);
+                    return Json(responseData);
+                }
+                return Json(null);
             }
-            return View();
-            return  Json(model);
         }
-
     }
 }

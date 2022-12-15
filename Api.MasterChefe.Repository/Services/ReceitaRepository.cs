@@ -25,8 +25,10 @@ namespace Api.MasterChefe.Repository.Services
         public async Task<Receita> BuscarPorId(int id)
         {
             var dados = await dbSet.Where(x => x.id == id).FirstOrDefaultAsync();
+            if(dados== null) {
+                return dados;
+            }
             dados.ingredientes = await dbSetIngrediente.Where(x => x.receitaId == id && x.ativo == true).ToListAsync() ?? new List<Ingrediente>();
-
             return dados;
         }
     }
