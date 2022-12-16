@@ -1,0 +1,59 @@
+﻿@model IEnumerable<UI.MasterChefe.Web.Models.ReceitaModel>
+
+@if (@Model != null)
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Título</th>
+                <th scope="col">Data de Cadastro</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td><img src="~/Img/@item.imagem" class="imagemGrid" /></td>
+                    <td>@item.titulo</td>
+                    <td>@item.dataCadastro</td>
+                    <td>
+                        <a asp-controller="Receita" asp-action="Editar" asp-route-id="@item.id"
+                   class="data-bs-toggle text-start" tooltip" data-bs-placement="top"
+                   title="Editar"><i class="fa fa-pen"></i></a>
+                    </td>
+
+
+                    <td>
+                        <a  href="#" id="@item.id"
+                   class="data-bs-toggle text-start deletarId" tooltip" data-bs-placement="top"
+                   title="Excluir">
+                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="~/Ingrediente/BuscarPorReceitaId/@item.id?"
+                   class="data-bs-toggle text-start" tooltip" data-bs-placement="top"
+                   title="Ingredientes">
+                            <i class="fa fa-folder-open"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+        }
+    </table>
+
+
+}
+else
+{
+    <p>Nenhum item encontrado.</p>
+}
+

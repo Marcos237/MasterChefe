@@ -21,11 +21,24 @@ body {
   margin-bottom: 60px;
 }
 
+form {
+    margin-top : 40px;
+    padding:10px;
+}
+
+form label {
+    font-weight : bold;
+}
 img {
-    height: 200px;
-    width : 200px;
+    height: 400px;
+    width: 200px;
 }
 .vitrine {
     margin-top:40px;
 }
 
+.imagemGrid {
+    height:40px;
+    width:40px;
+    border:1px;
+}

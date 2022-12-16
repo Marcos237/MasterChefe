@@ -8,23 +8,26 @@ namespace UI.MasterChefe.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IConfiguration configuration;
+        private string conexao;
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            this.configuration = configuration;
+            conexao = configuration["apiUrl"] ?? "";
         }
 
         public async Task<IActionResult> Index()
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync($"https://localhost:7043/api/Receita");
-                var responseString = await response.Content.ReadAsStringAsync();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    var responseData = JsonConvert.DeserializeObject<List<ReceitaModel>>(responseString);
-                    return View(responseData);
-                }
+                //var response = await client.GetAsync($"{conexao}/Receita");
+                //var responseString = await response.Content.ReadAsStringAsync();
+                //if (response.StatusCode == HttpStatusCode.OK)
+                //{
+                //    var responseData = JsonConvert.DeserializeObject<List<ReceitaModel>>(responseString);
+                //    return View(responseData);
+                //}
                 return View();
             }
         }
@@ -34,7 +37,7 @@ namespace UI.MasterChefe.Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync($"https://localhost:7043/api/Receita/id?");
+                var response = await client.GetAsync($"{conexao}/Receita/id?");
                 var responseString = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {

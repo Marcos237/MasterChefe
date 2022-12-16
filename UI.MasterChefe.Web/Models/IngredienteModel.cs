@@ -8,5 +8,7 @@
         public decimal? peso { get; set; }
         public int? quantidade { get; set; }
         public int receitaId { get; set; }
+        public DateTime? dataCadastro { get; set; }
+        public List<IngredienteModel> ingredientes { get; set; }
     }
 }

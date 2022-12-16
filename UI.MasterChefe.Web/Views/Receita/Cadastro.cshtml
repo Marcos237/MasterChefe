@@ -1,0 +1,56 @@
+﻿@model UI.MasterChefe.Web.Models.ReceitaModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h5>Cadastro</h5>
+
+<input asp-for="@Model.id" type="hidden" id="hdId" />
+<form asp-controller="Receita" asp-action="Cadastro" method="post" class="border" enctype="multipart/form-data">
+
+
+    <div class="container">
+        <div class="row g-2 align-items-center">
+            <div class="col-4">
+                <label asp-for="@Model.titulo" class="form-label">Título</label>
+                <input asp-for="@Model.titulo" type="text" class="form-control" id="txtTitulo">
+                <span asp-validation-for="@Model.titulo" class="text-danger"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="@Model.arquivo" class="form-label">Arquivo</label>
+                <input type="file" asp-for="@Model.arquivo" class="form-control" id="txtimagem">
+                <span asp-validation-for="@Model.arquivo" class="text-danger"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="@Model.descricao" class="form-label">Descrição</label>
+                <input type="text" asp-for="@Model.descricao" class="form-control" id="txtdescicao">
+                <span asp-validation-for="@Model.descricao" class="text-danger"></span>
+            </div>
+
+        </div>
+        <br />
+        <div class="row g-3 align-items-center">
+            <div class="row g-2 align-items-center">
+                <div class="col-12">
+                    <label asp-for="@Model.modoFazer" class="form-label">Mode de preparo</label>
+                    <textarea asp-for="@Model.modoFazer" class="form-control id="txtModeFazer" rows="10"></textarea>
+                    <span asp-validation-for="@Model.modoFazer" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div>
+            <button type="submit" class="btn btn-dark" id="btnSalvar">Salvar</button>
+        </div>
+    </div>
+
+</form>
+<br />
+<h5>Receitas</h5>
+<br />
+<partial name="_ListaReceitaPartial" view-data="ViewData" for="@Model.receitas"></partial>
+<partial name="_ExcluirReceitaPartial" model="new ReceitaModel()" view-data="ViewData"></partial>

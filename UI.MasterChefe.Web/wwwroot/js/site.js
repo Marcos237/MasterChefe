@@ -25,8 +25,35 @@ $(".idDetalhes").click(function () {
     });
 
 });
+
+
+$(".deletarId").click(function () {
+
+    var id = $(this).attr('id');
+
+    console.log(id);
+    $.ajax({
+        type: "Get",
+        url: "/Receita/BuscarPorId",
+        data: {
+            'id': id
+        },
+        success: function (data) {
+
+            $('#modalExcluir').modal('show');
+            $('#hdIdExcluir').val(data.id);
+            $('#txtTitulo2').val(data.titulo);
+            console.log(data)
+        }
+    });
+
+});
+
+
 $(".btn-close").click(function () {
 
     $('#modalDetalhes').modal('hide');
 });
+
+
 
