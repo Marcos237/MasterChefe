@@ -8,5 +8,6 @@ namespace Api.MasterChefe.Aplications.Interfaces
         Task<Ingrediente> Atualizar(Ingrediente ingrediente);
         Task<bool> Deletar(int id);
         Task<List<Ingrediente>> BuscarPorId(int id);
+        Task<List<Ingrediente>> BuscarTodos();
     }
 }

@@ -24,7 +24,7 @@ namespace Api.MasterChefe.Repository.Services
 
         public async Task<Receita> BuscarPorId(int id)
         {
-            var dados = await dbSet.Where(x => x.id == id).FirstOrDefaultAsync();
+            var dados = await dbSet.Where(x => x.id == id && x.ativo == true).FirstOrDefaultAsync();
             if(dados== null) {
                 return dados;
             }

@@ -31,20 +31,21 @@ namespace Api.MasterChefe.Aplications.Services
             }
             else
             {
+                receita.dataCadastro = DateTime.Now;
                 var dados = await repository.Salvar(receita);
-                foreach (var item in receita.ingredientes)
-                {
-                    item.id = 0;
-                    item.receitaId = receita.id;
-                    await ingredientesAplicationsService.Salvar(item);
-                }
             }
 
             return receita;
         }
         public async Task<Receita> Atualizar(Receita receita)
         {
-            await repository.Atualizar(receita);
+            var dados = await receitaRepository.BuscarPorId(receita.id);
+            dados.titulo = receita.titulo;
+            dados.descricao = receita.descricao;
+            dados.imagem= receita.imagem;
+            dados.dataAtualizacao = DateTime.Now;
+            dados.modoFazer = receita.modoFazer;
+            await repository.Atualizar(dados);
             return receita;
         }
 

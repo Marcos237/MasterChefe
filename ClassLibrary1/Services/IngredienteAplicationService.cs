@@ -20,13 +20,22 @@ namespace Api.MasterChefe.Aplications.Services
         }
         public async Task<Ingrediente> Salvar(Ingrediente ingrediente)
         {
+            ingrediente.dataCadastro = DateTime.Now;
+            ingrediente.dataAtualizacao = DateTime.Now;
             await repository.Salvar(ingrediente);
             return ingrediente;
         }
         public async Task<Ingrediente> Atualizar(Ingrediente ingrediente)
         {
-           await  repository.Atualizar(ingrediente);
-            return ingrediente;
+            var dados = BuscarTodos().Result.FirstOrDefault(x => x.id== ingrediente.id); 
+            dados.descricao = ingrediente.descricao;
+            dados.Nome = ingrediente.Nome;
+            dados.peso= ingrediente.peso;
+            dados.quantidade= ingrediente.quantidade;
+            dados.dataAtualizacao = ingrediente.dataAtualizacao;
+
+            await repository.Atualizar(dados);
+            return dados;
         }
         public async Task<List<Ingrediente>> BuscarPorId(int id)
         {
@@ -39,5 +48,10 @@ namespace Api.MasterChefe.Aplications.Services
             return dados;
         }
 
+        public async Task<List<Ingrediente>> BuscarTodos()
+        {
+            var dados = await repository.BuscarTodos();
+            return dados;
+        }
     }
 }

@@ -22,7 +22,8 @@ namespace Api.MasterChefe.Repository.Services
         }
         public async Task<T> Atualizar(T entity)
         {
-            var entry =  masterChefeContext.Entry(entity);
+
+            var entry = masterChefeContext.Entry(entity);
             dbSet.Attach(entity);
             entry.State = EntityState.Modified;
             await masterChefeContext.SaveChangesAsync();

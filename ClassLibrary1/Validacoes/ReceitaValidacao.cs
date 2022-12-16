@@ -16,11 +16,6 @@ namespace Api.MasterChefe.Aplications.Validacoes
                 return descricao;
             }).WithMessage("O campo de descrição é obrigatório");
 
-            RuleFor(x => x.ingredientes.Count() > 0).Must((ingredientes) =>
-            {
-                return ingredientes;
-            }).WithMessage("É obrigatório ao menos um ingrediente.");
-
             RuleFor(x => x.descricao.Length < 1000).Must((descricao) =>
             {
                 return descricao;

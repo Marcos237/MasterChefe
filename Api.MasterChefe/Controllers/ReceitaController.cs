@@ -41,10 +41,10 @@ namespace Api.MasterChefe.Web.Controllers
 
         [ProducesResponseType(typeof(Receita), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status404NotFound)]
-        [Route("id")]
+        [Route("{id}")]
         [HttpGet]
         public async Task<IActionResult> Get(int id)
-        {
+            {
             try
             {
                 var dados = await receitasAplicationsService.BuscarPorId(id);
@@ -107,7 +107,7 @@ namespace Api.MasterChefe.Web.Controllers
 
         [ProducesResponseType(typeof(Receita), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status500InternalServerError)]
-        [Route("id")]
+        [Route("{id}")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

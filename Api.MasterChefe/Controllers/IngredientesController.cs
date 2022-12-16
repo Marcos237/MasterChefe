@@ -1,4 +1,5 @@
 ﻿using Api.MasterChefe.Aplications.Interfaces;
+using Api.MasterChefe.Aplications.Services;
 using Api.MasterChefe.Domain.Entidades;
 using Api.MasterChefe.Domain.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +18,32 @@ namespace Api.MasterChefe.Web.Controllers
             this.eventoService = eventoService;
         }
 
+
         [ProducesResponseType(typeof(Ingrediente), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status404NotFound)]
         [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var dados = await ingredientesAplicationsService.BuscarTodos();
+                if (dados == null)
+                {
+                    return NotFound("Nenhum item encontrado");
+                }
+
+                return Ok(dados);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Exception(ex.Message.ToString()));
+            }
+        }
+
+        [ProducesResponseType(typeof(Ingrediente), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status404NotFound)]
+        [HttpGet]
+        [Route("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -28,6 +52,28 @@ namespace Api.MasterChefe.Web.Controllers
                 if (dados == null)
                 {
                     return NotFound("Nenhum item encontrado");
+                }
+
+                return Ok(dados);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Exception(ex.Message.ToString()));
+            }
+        }
+
+
+        [ProducesResponseType(typeof(Ingrediente), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status500InternalServerError)]
+        [HttpPost]
+        public async Task<IActionResult> Post(Ingrediente ingrediente)
+        {
+            try
+            {
+                var dados = await ingredientesAplicationsService.Salvar(ingrediente);
+                if (eventoService.Evento.eventos.Count() > 0)
+                {
+                    return BadRequest(eventoService.Evento.eventos);
                 }
 
                 return Ok(dados);
@@ -64,6 +110,7 @@ namespace Api.MasterChefe.Web.Controllers
         [ProducesResponseType(typeof(Ingrediente), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status500InternalServerError)]
         [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

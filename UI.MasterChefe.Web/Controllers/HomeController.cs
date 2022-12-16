@@ -21,13 +21,13 @@ namespace UI.MasterChefe.Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                //var response = await client.GetAsync($"{conexao}/Receita");
-                //var responseString = await response.Content.ReadAsStringAsync();
-                //if (response.StatusCode == HttpStatusCode.OK)
-                //{
-                //    var responseData = JsonConvert.DeserializeObject<List<ReceitaModel>>(responseString);
-                //    return View(responseData);
-                //}
+                var response = await client.GetAsync($"{conexao}/Receita");
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseData = JsonConvert.DeserializeObject<List<ReceitaModel>>(responseString);
+                    return View(responseData);
+                }
                 return View();
             }
         }
@@ -37,7 +37,7 @@ namespace UI.MasterChefe.Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync($"{conexao}/Receita/id?");
+                var response = await client.GetAsync($"{conexao}/Receita/{id}");
                 var responseString = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {

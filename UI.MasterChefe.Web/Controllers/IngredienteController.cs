@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net;
+using System.Text;
 using UI.MasterChefe.Web.Models;
 
 namespace UI.MasterChefe.Web.Controllers
@@ -7,98 +10,140 @@ namespace UI.MasterChefe.Web.Controllers
     {
         private IWebHostEnvironment webHostEnvironment;
         private readonly IConfiguration configuration;
+        private string conexao;
 
         public IngredienteController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             this.webHostEnvironment = webHostEnvironment;
             this.configuration = configuration;
+            conexao = configuration["apiUrl"] ?? "";
         }
 
         [HttpGet]
-        public IActionResult BuscarPorReceitaId(int id)
+        public async Task<IActionResult> BuscarPorReceitaId(int id)
         {
             IngredienteModel model = new IngredienteModel();
-            return View("Cadastro", model);
+            ViewBag.ReceitaId = id;
+            ViewBag.id = 0;
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync($"{conexao}/Ingrediente/{id}");
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseData = JsonConvert.DeserializeObject<List<IngredienteModel>>(responseString);
+                    model.ingredientes = responseData?? new List<IngredienteModel>();
+                    return View("Cadastro", model);
+                }
+                return View("Cadastro", model);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastro(ReceitaModel model)
+        public async Task<IActionResult> Cadastro(IngredienteModel model)
         {
 
             if (ModelState.IsValid)
             {
-
-                var teste = new ReceitaModel()
+                using (var client = new HttpClient())
                 {
-                    id = 52,
-                    descricao = model.descricao,
-                    dataCadastro = DateTime.Now,
-                    imagem = model.imagem,
-                    modoFazer = model.modoFazer,
-                    titulo = model.titulo
-                };
+                    if (model.id == 0)
+                    {
+                        var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                        var response = await client.PostAsync($"{conexao}/Ingrediente", content);
+                        var responseString = await response.Content.ReadAsStringAsync();
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var responseData = JsonConvert.DeserializeObject<IngredienteModel>(responseString);
+                            return RedirectToAction($"BuscarPorReceitaId", new  {id = responseData.receitaId} );
+                        }
+                    }
+                    else
+                    {
+                        var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                        var response = await client.PutAsync($"{conexao}/Ingrediente", content);
+                        var responseString = await response.Content.ReadAsStringAsync();
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var responseData = JsonConvert.DeserializeObject<IngredienteModel>(responseString);
+                            return RedirectToAction($"BuscarPorReceitaId", new {id = responseData.receitaId});
+                        }
+                    }
 
-
-
-                model.receitas = new List<ReceitaModel>();
-                model.receitas.Add(teste);
+                    return View();
+                }
             }
-            return View("Cadastro", model);
+            return RedirectToAction($"BuscarPorReceitaId", new {id = ViewBag.ReceitaId});
         }
 
         [HttpGet]
-        public IActionResult Editar(int id)
+        public async Task<IActionResult> Editar(int id)
         {
-            var model = new ReceitaModel()
+            ViewBag.id = id;
+ 
+            using (var client = new HttpClient())
             {
+                var response = await client.GetAsync($"{conexao}/Ingrediente");
+                var responseString = await response.Content.ReadAsStringAsync();
 
-                id = id,
-                descricao = "teste",
-                dataCadastro = DateTime.Now,
-                imagem = "teste",
-                modoFazer = "teste",
-                titulo = "teste"
-            };
-            var teste = new ReceitaModel()
-            {
-                id = id,
-                descricao = "teste",
-                dataCadastro = DateTime.Now,
-                imagem = "teste",
-                modoFazer = "teste",
-                titulo = "teste"
-            };
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseData = JsonConvert.DeserializeObject<List<IngredienteModel>>(responseString);
+                    var dados = responseData.ToList().FirstOrDefault(x => x.id == id) ?? new IngredienteModel();
 
-            model.receitas = new List<ReceitaModel>();
-            model.receitas.Add(teste);
+                    var responseList = await client.GetAsync($"{conexao}/Ingrediente/{dados.receitaId}");
+                    var responseStringList = await responseList.Content.ReadAsStringAsync();
+                    var responseDataList = JsonConvert.DeserializeObject<List<IngredienteModel>>(responseStringList);
+                    dados.ingredientes = responseDataList ?? new List<IngredienteModel>();
 
-            return View("Cadastro", model);
+                    ViewBag.ReceitaId = dados.receitaId;
+                    return View("Cadastro", dados);
+                }
+                return RedirectToAction($"BuscarPorReceitaId", new { id = ViewBag.ReceitaId });
+            }
         }
-
 
         [HttpGet]
-        public async Task<JsonResult> BuscarPorId(int id)
+        public async Task<IActionResult> BuscarPorId(int id)
         {
+            ViewBag.id = id;
 
-            var model = new ReceitaModel()
+            using (var client = new HttpClient())
             {
+                var response = await client.GetAsync($"{conexao}/Ingrediente");
+                var responseString = await response.Content.ReadAsStringAsync();
 
-                id = 52,
-                descricao = "teste",
-                dataCadastro = DateTime.Now,
-                imagem = "teste",
-                modoFazer = "teste",
-                titulo = "teste"
-            };
-            return Json(model);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseData = JsonConvert.DeserializeObject<List<IngredienteModel>>(responseString);
+                    var dados = responseData.ToList().FirstOrDefault(x => x.id == id) ?? new IngredienteModel();
 
+                    ViewBag.ReceitaId = dados.receitaId;
+                    return Json(dados);
+                }
+                return Json(null);
+            }
         }
+
 
         [HttpPost]
-        public IActionResult Excluir(ReceitaModel model)
+        public async Task<IActionResult> Excluir(IngredienteModel model)
         {
+            using (var client = new HttpClient())
+            {
+                var response = await client.DeleteAsync($"{conexao}/Ingrediente/{model.id}");
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseIngrediente = await client.GetAsync($"{conexao}/Ingrediente");
+                    var responseStringIngrediente = await responseIngrediente.Content.ReadAsStringAsync();
+                    var responseDataIngrediente = JsonConvert.DeserializeObject<List<IngredienteModel>>(responseStringIngrediente);
+                    var dados = responseDataIngrediente.ToList().FirstOrDefault() ?? new IngredienteModel();
 
-            return View("Cadastro", new ReceitaModel());
+                    return RedirectToAction($"BuscarPorReceitaId", new { id = dados.receitaId });
+                }
+                return Json(null);
+            }
         }
     }
 }

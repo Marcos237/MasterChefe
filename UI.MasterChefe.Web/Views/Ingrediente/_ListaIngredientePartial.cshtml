@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<UI.MasterChefe.Web.Models.IngredienteModel>
 
-@if (@Model != null)
+@if (@Model.Count()> 0)
 {
 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col"></th>
                 <th scope="col">Nome</th>
                 <th scope="col">Peso</th>
-                <th scope="col">Qauantidade</th>
+                <th scope="col">Quantidade</th>
                 <th scope="col">Data de Cadastro</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -24,15 +24,15 @@
                     <td>@item.quantidade</td>
                     <td>@item.dataCadastro</td>
                     <td>
-                        <a asp-controller="Receita" asp-action="Editar" asp-route-id="@item.id"
+                        <a asp-controller="Ingrediente" asp-action="Editar" asp-route-id="@item.id"
                    class="data-bs-toggle text-start" tooltip" data-bs-placement="top"
                    title="Editar"><i class="fa fa-pen"></i></a>
                     </td>
 
 
                     <td>
-                        <a href="#" id="@item.id"
-                   class="data-bs-toggle text-start deletarId" tooltip" data-bs-placement="top"
+                        <a href="#" id="@item.id" 
+                   class="data-bs-toggle text-start deletarIdIngrediente" tooltip" data-bs-placement="top"
                    title="Excluir">
                             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                         </a>
@@ -48,10 +48,4 @@
 else
 {
     <p>Nenhum item encontrado.</p>
-}
-
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
 }
